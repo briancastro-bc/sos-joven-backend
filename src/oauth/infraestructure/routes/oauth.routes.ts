@@ -9,6 +9,10 @@ const router = Router({
   caseSensitive: true,
 });
 
+router.get('/hola', (req, res) => {
+  res.send('Hello world!');
+});
+
 router.post('/token');
 
 router.post('/login', async (req: Request, res: Response) => {

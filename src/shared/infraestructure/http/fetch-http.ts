@@ -19,22 +19,18 @@ export class FetchClientHttp implements HttpRepository {
   }
 
   async put<T>(parameters: HttpParams): Promise<HttpResponse<T>> {
-    const { url, body, } = parameters;
-    return this.http.put(url, body);
+    throw new Error("Method not implemented");
   }
 
   async post<T>(parameters: HttpParams): Promise<HttpResponse<T>> {
-    const { url, body, } = parameters;
-    return this.http.post(url, body);
+    throw new Error("Method not implemented");
   }
 
   async patch<T>(parameters: HttpParams): Promise<HttpResponse<T>> {
-    const { url, body, } = parameters;
-    return this.http.patch(url, body);
+    throw new Error("Method not implemented");
   }
 
   async delete<T>(parameters: HttpParams): Promise<HttpResponse<T>> {
-    const { url, } = parameters;
-    return this.http.delete(url);
+    throw new Error("Method not implemented");
   }
 }

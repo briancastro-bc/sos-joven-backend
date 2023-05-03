@@ -11,7 +11,8 @@ import { Logger } from '@shared/domain/index.ts';
 
 class WinstonLogger implements Logger {
 
-  private readonly DIR_PATH: Readonly<string> = path.join(import.meta.dir, '../../../../../', 'logs');
+  // private readonly DIR_PATH: Readonly<string> = path.join(import.meta.dir, '../../../../../', 'logs');
+  private readonly DIR_PATH: Readonly<string> = path.join(__dirname, '../../../../', 'logs');
 
   private readonly logger: ExternalLogger;
 

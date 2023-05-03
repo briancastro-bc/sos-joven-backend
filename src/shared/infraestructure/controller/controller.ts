@@ -12,7 +12,7 @@ export class Controller {
     return this._headers;
   }
 
-  set headers(value: HttpHeaders) {
+  set headers(value: HttpHeaders | undefined) {
     this._headers = value;
   }
 }

@@ -3,7 +3,9 @@ import http from 'node:http';
 import express, { Application } from 'express';
 import { Server } from 'socket.io';
 
-import { initializeContainer, winstonLogger } from './shared/infraestructure';
+import { initializeContainer, winstonLogger } from '@shared/infraestructure';
+
+import { handleRoutes, handleNamespaces, handleGlobalMiddlewares } from '@src/handlers';
 
 async function bootstrap(): Promise<void> {
   const app: Application = express();
@@ -13,7 +15,6 @@ async function bootstrap(): Promise<void> {
 
   const io = new Server(httpServer, {
     wsEngine: ws.Server,
-    transports: ['websocket'],
     connectTimeout: 120000,
     cors: {
       origin: '*',
@@ -21,21 +22,20 @@ async function bootstrap(): Promise<void> {
     },
   });
 
-  io.on('connection', (socket) => {
-    socket.on("hello", () => {
-      console.log('world');
-    })
-  });
+  handleGlobalMiddlewares(app);
+  handleRoutes(app);
+  handleNamespaces(io);
 
   httpServer.listen(PORT, () => {
-    winstonLogger.info(`Server running on port: ${PORT}`);
+    // winstonLogger.info(`Server running on port: ${PORT}`);
+    console.log(`Server running on port ${PORT}`);
   });
 }
 
 async function init(): Promise<void> {
-  initializeContainer()
+  return initializeContainer()
     .then(bootstrap);
 }
 
 init()
-  .catch((err: any) => winstonLogger.error(`Error: ${err}`));
+  .catch((err: any) => console.error(`Error: ${err}`));
