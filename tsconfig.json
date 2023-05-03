@@ -1,9 +1,38 @@
 {
-  "extends": "./tsconfig.base",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@oauth/*": ["./src/oauth/*"],
+      "@shared/*": ["./src/shared/*"],
+    },
+    "lib": [
+      "ESNext"
+    ],
+    "outDir": "./dist",
+    "module": "CommonJS",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "downlevelIteration": true,
+    "skipLibCheck": true,
+    "jsx": "preserve",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowImportingTsExtensions": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "allowJs": true,
+    "types": [
+      "bun-types", // add Bun global
+      "reflect-metadata"
+    ]
+  },
   "exclude": ["node_modules", "test"],
   "include": [
-    "*.ts",
-    "src/**/*", 
+    "/**/*.ts" ,
     "test/**/*"
   ],
 }
