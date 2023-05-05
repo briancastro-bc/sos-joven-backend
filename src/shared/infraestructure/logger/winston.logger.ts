@@ -1,3 +1,4 @@
+import { injectable } from 'inversify';
 import {
   createLogger,
   format,
@@ -9,7 +10,8 @@ import path from 'node:path';
 
 import { Logger } from '@shared/domain/index.ts';
 
-class WinstonLogger implements Logger {
+@injectable()
+export class WinstonLogger implements Logger {
 
   // private readonly DIR_PATH: Readonly<string> = path.join(import.meta.dir, '../../../../../', 'logs');
   private readonly DIR_PATH: Readonly<string> = path.join(__dirname, '../../../../', 'logs');
@@ -62,5 +64,3 @@ class WinstonLogger implements Logger {
     this.logger.log('success', message, callback);
   }
 }
-
-export const winstonLogger = new WinstonLogger();

@@ -13,7 +13,6 @@ import { buildProviderModule, fluentProvide, autoProvide } from 'inversify-bindi
 import { IOC_TYPES } from './ioc-types.ts';
 
 import { IoC } from '@shared/domain/index.ts';
-import { IOAuthRepository } from '@oauth/domain/oauth-repository.ts';
 
 const provideSingleton = (identifier: any) => {
   return fluentProvide(identifier)

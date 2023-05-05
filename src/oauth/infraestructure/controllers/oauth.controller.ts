@@ -3,13 +3,13 @@ import { provideSingleton, inject, IOC_TYPES } from '@shared/infraestructure/ind
 
 import { login } from '@oauth/application/login/login.ts';
 import { signup } from '@oauth/application/signup/signup.ts';
-import { IOAuthRepository } from '@oauth/domain/oauth-repository.ts';
+import { OAuth } from '@oauth/domain/oauth-repository.ts';
 
 @provideSingleton(OAuthController)
 export class OAuthController extends Controller {
 
   constructor(
-    @inject(IOC_TYPES.oauthRepository.symbol as symbol) private readonly oauthRepository: IOAuthRepository,
+    @inject(IOC_TYPES.oauthRepository.symbol as symbol) private readonly oauthRepository: OAuth,
   ) {
     super();
   }

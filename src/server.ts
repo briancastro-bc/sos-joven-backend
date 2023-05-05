@@ -1,15 +1,21 @@
 import ws from 'ws';
+import dotenv from 'dotenv';
+import path from 'node:path';
 import http from 'node:http';
-import express, { Application } from 'express';
 import { Server } from 'socket.io';
+import express, { Application } from 'express';
 
-import { initializeContainer, winstonLogger } from '@shared/infraestructure';
+import { initializeContainer, Configuration } from '@shared/infraestructure';
+import handleApplicationRoutes from '@shared/infraestructure/routes';
+import handleApplicationMiddlewares from '@shared/infraestructure/middlewares';
 
-import { handleRoutes, handleNamespaces, handleGlobalMiddlewares } from '@src/handlers';
+dotenv.config({
+  path: `${path.resolve(path.join(process.cwd(), '..'), '.env')}`
+});
 
 async function bootstrap(): Promise<void> {
   const app: Application = express();
-  const PORT: number | string = process.env.PORT as string || 3000;
+  const PORT: number | string = Configuration.get<string>('PORT', 3001);
 
   const httpServer = http.createServer(app);
 
@@ -22,9 +28,9 @@ async function bootstrap(): Promise<void> {
     },
   });
 
-  handleGlobalMiddlewares(app);
-  handleRoutes(app);
-  handleNamespaces(io);
+  handleApplicationMiddlewares(app);
+  handleApplicationRoutes(app);
+  // handleNamespaces(io);
 
   httpServer.listen(PORT, () => {
     // winstonLogger.info(`Server running on port: ${PORT}`);

@@ -8,13 +8,13 @@ export type LoggerLevels = 'info' | 'debug' | 'error' | 'success' | 'warning';
 */
 export interface Logger {
 
-  info(message: string, callback?: any | Function): void;
+  info(message: Required<NonNullable<string>>, callback?: any | Function): void;
 
-  debug(message: string, callback?: any | Function): void;
+  debug(message: Required<NonNullable<string>>, callback?: any | Function): void;
 
-  error(message: string, callback?: any | Function): void;
+  error(message: Required<NonNullable<string>>, callback?: any | Function): void;
 
-  success(message: string, callback?: any | Function): void;
+  warning(message: Required<NonNullable<string>>, callback?: any | Function): void;
 
-  warning(message: string, callback?: any | Function): void;
+  success?(message: Required<NonNullable<string>>, callback?: any | Function): void;
 }

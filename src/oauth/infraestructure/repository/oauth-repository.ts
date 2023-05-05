@@ -1,9 +1,9 @@
 import { injectable } from 'inversify';
 
-import { IOAuthRepository } from '@oauth/domain/oauth-repository.ts';
+import { OAuth } from '@oauth/domain/oauth-repository.ts';
 
 @injectable()
-export class OAuthRepository implements IOAuthRepository {
+export class OAuthRepository implements OAuth {
 
   public async login(username: string, password: string): Promise<boolean> {
     throw new Error("Method not implemented");
