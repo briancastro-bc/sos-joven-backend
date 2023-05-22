@@ -5,7 +5,7 @@ import http from 'node:http';
 import { Server } from 'socket.io';
 import express, { Application } from 'express';
 
-import { initializeContainer, Configuration } from '@shared/infraestructure';
+import { initializeContainer, Configuration, WinstonLogger, ioc, IOC_TYPES } from '@shared/infraestructure';
 import handleApplicationRoutes from '@shared/infraestructure/routes';
 import handleApplicationMiddlewares from '@shared/infraestructure/middlewares';
 
@@ -32,9 +32,10 @@ async function bootstrap(): Promise<void> {
   handleApplicationRoutes(app);
   // handleNamespaces(io);
 
+  const logger = ioc.get<WinstonLogger>(IOC_TYPES.WinstonLogger.symbol as symbol);
+
   httpServer.listen(PORT, () => {
-    // winstonLogger.info(`Server running on port: ${PORT}`);
-    console.log(`Server running on port ${PORT}`);
+    logger.info(`Server running on port ${PORT}`);
   });
 }
 
@@ -44,4 +45,4 @@ async function init(): Promise<void> {
 }
 
 init()
-  .catch((err: any) => console.error(`Error: ${err}`));
+  .catch((err: Error) => { throw err; });

@@ -2,7 +2,7 @@
   "name": "sos-joven-app",
   "version": "0.1.0",
   "private": true,
-  "license": "UNNLICENSED",
+  "license": "UNLICENSED",
   "author": {
     "email": "brian.castro.bedoya@gmail.com",
     "name": "Brian Castro Bedoya",
@@ -28,6 +28,7 @@
     "express": "^4.18.2",
     "inversify": "^6.0.1",
     "inversify-binding-decorators": "^4.0.0",
+    "redis": "^4.6.6",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
     "socket.io": "^4.6.1",

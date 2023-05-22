@@ -9,7 +9,7 @@ import { OAuth } from '@oauth/domain/oauth-repository.ts';
 export class OAuthController extends Controller {
 
   constructor(
-    @inject(IOC_TYPES.oauthRepository.symbol as symbol) private readonly oauthRepository: OAuth,
+    @inject(IOC_TYPES.OAuthRepository.symbol as symbol) private readonly oauthRepository: OAuth,
   ) {
     super();
   }

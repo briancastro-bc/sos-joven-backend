@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+import path from 'node:path';
 import { injectable } from 'inversify';
 import {
   createLogger,
@@ -5,42 +7,32 @@ import {
   transports,
   Logger as ExternalLogger,
   LogCallback,
+  transport,
 } from 'winston';
-import path from 'node:path';
+import { 
+  FileTransportOptions,
+  ConsoleTransportOptions, 
+} from 'winston/lib/winston/transports';
 
-import { Logger } from '@shared/domain/index.ts';
+import { Logger, LoggerLevels } from '@shared/domain';
+import { Configuration } from '@shared/infraestructure';
 
 @injectable()
 export class WinstonLogger implements Logger {
 
-  // private readonly DIR_PATH: Readonly<string> = path.join(import.meta.dir, '../../../../../', 'logs');
-  private readonly DIR_PATH: Readonly<string> = path.join(__dirname, '../../../../', 'logs');
-
   private readonly logger: ExternalLogger;
+
+  private readonly isProdMode: boolean = Configuration.get<string>('NODE_ENV') === 'prod';
 
   constructor() {
     this.logger = createLogger({
       format: format.combine(
-        format.colorize({
-          all: true,
-          colors: {
-            info: 'blue',
-            error: 'red',
-            warning: 'yellow',
-            success: 'green',
-            debug: 'grey'
-          },
-        }),
-        format.timestamp({ format: 'DD-MM-YYYY HH:mm:ss' }),
+        format.cli(),
       ),
       exitOnError: false,
       transports: [
-        new transports.File({ filename: `info-${Date.now()}.log`, dirname: `${this.DIR_PATH}/info`, level: 'info' }),
-        new transports.File({ filename: `error-${Date.now()}.log`, dirname: `${this.DIR_PATH}/error`, level: 'error' }),
-        new transports.File({ filename: `success-${Date.now()}.log`, dirname: `${this.DIR_PATH}/success`, level: 'success' }),
-        new transports.File({ filename: `debug-${Date.now()}.log`, dirname: `${this.DIR_PATH}/debug`, level: 'debug' }),
-        new transports.File({ filename: `warning-${Date.now()}.log`, dirname: `${this.DIR_PATH}/warning`, level: 'warning' }),
-      ],
+        this.isProdMode ? this.createFileTransport() : this.createConsoleTransport(),
+      ]
     });
   }
 
@@ -62,5 +54,30 @@ export class WinstonLogger implements Logger {
 
   success(message: string, callback?: LogCallback): void {
     this.logger.log('success', message, callback);
+  }
+
+  private createFileTransport(): transport {
+    const DIR_PATH: Readonly<string> = path.resolve(path.join(__dirname, '../../../../'), 'logs');
+    return new transports.File({
+      dirname: DIR_PATH,
+    })
+  }
+
+  private createConsoleTransport(): transport {
+    return new transports.Console({
+      format: format.combine(
+        format.colorize({
+          all: true,
+          colors: {
+            info: 'blue',
+            error: 'red',
+            warning: 'yellow',
+            success: 'green',
+            debug: 'grey'
+          },
+        }),
+        format.timestamp({ format: 'hh:mm:ss A' }),
+      ),
+    });
   }
 }

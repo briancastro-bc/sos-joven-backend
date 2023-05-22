@@ -11,6 +11,7 @@
     "target": "ES6",
     "module": "commonjs",
     "moduleResolution": "node",
+    "allowJs": true,
     "strict": true,
     "composite": true,
     "downlevelIteration": true,
@@ -22,7 +23,6 @@
     "allowImportingTsExtensions": true,
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "allowJs": true,
     "types": [
       "bun-types", // add Bun global
       "reflect-metadata"

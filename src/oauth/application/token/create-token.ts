@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
 
-export async function createToken() {
+export async function createToken(): Promise<any> {
 
 }
