@@ -7,5 +7,5 @@ export {
   provideSingleton, 
   initializeContainer, 
   IOC_TYPES 
-} from './inversify/ioc.ts';
+} from './ioc/ioc.ts';
 export { Configuration } from './config/config.ts';

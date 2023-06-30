@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import ws from 'ws';
 import dotenv from 'dotenv';
 import path from 'node:path';

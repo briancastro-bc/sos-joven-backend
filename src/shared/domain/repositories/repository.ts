@@ -1,4 +1,4 @@
-import { Entity } from "./entity.ts";
+import { Entity } from "../persistence/entity";
 
 export interface Repository<T extends Entity> {
   findAll?(): Promise<T[]>;
